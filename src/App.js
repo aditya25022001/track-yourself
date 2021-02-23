@@ -41,10 +41,10 @@ function App() {
   return (
     <div className="App">
       <div className="todos_for_the_day" style={{ fontWeight:600, fontSize:20, marginBottom:'2%' }}>To Do's For {date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()} </div>
-      <div className="todo_input">
+      <div className="todo_input" style={{ marginBottom:'0.5%' }}>
         <input className="input_todo" type="text" required maxLength="20" value={Input} onChange={ e => setInput(e.target.value) } />
         <input className="input_time_todo" type="time" required value={inputTime} onChange={ e => setInputTime(e.target.value) } />
-        <button className="add_todo" onClick={addTodo} >Add ToDo</button>
+        <button className="add_todo" id="add_todo" onClick={addTodo} >Add ToDo</button>
       </div>
       <div className="todos">
         {todos.map(todo => (
@@ -54,7 +54,7 @@ function App() {
               taskNo={todo.taskNo}
               deadline={todo.taskComplete}
             />
-            <div className="hrline" style={{ height:'0.2px', backgroundColor:'rgb(173,173,173)', marginTop:'1%', marginBottom:'1%' }} ></div>
+            <div className="hrline" style={{width:'100%', height:'0.2px', backgroundColor:'rgb(173,173,173)', marginTop:'1%', marginBottom:'1%' }} ></div>
           </div>
         ))}
       </div>
