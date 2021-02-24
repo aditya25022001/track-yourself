@@ -3,7 +3,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import './App.css'
 
-export const ToDoItem = ( { todoItem, deadline, taskNo } ) => {
+export const ToDoItem = ( { todoItem, deadline } ) => {
 
     const [noteDone, Done] = useState(<ThumbUpAltIcon/>)
     const change = (e) => {
@@ -19,15 +19,10 @@ export const ToDoItem = ( { todoItem, deadline, taskNo } ) => {
 
     return (
         <div className="each_todo">
-            <div style={{ display:'flex', flexDirection:'row', alignItems:'center', marginRight:15 }} >
-                <div className="task_number" style={{ marginRight:10 }} >{taskNo}<b>.</b></div>
-                <div style={{ display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between', width:'100%' }}>
-                    <div className="task_name">{todoItem}</div>
-                </div>
-            </div>
+            <div className="task_name" style={{ marginLeft:'-8%', marginRight:'5%' }} >{todoItem}</div>
             <div style={{ display:'flex', flexDirection:'row', alignItems:'center' }}>
-                <div className="task_before" style={{ marginRight:'5%', marginLeft:'-5%' }}>{deadline}</div>
-                <div className="edit_task"><CreateIcon/></div>
+                <div className="task_before" style={{marginLeft:'5%', marginRight:'12%' }}>{deadline}</div>
+                <div className="edit_task" style={{ marginRight:'5%' }} ><CreateIcon/></div>
                 <div className="task_complete" onClick={change} style={{ color:setColor() }}>{noteDone}</div>
             </div>
         </div>
