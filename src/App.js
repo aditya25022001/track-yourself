@@ -23,7 +23,8 @@ function App() {
       db.collection('todos').add({
         taskName:Input,
         taskComplete:inputTime,
-        timestamp:firebase.firestore.FieldValue.serverTimestamp()
+        timestamp:firebase.firestore.FieldValue.serverTimestamp(),
+        doneDatabase:false
       })
       setWarning('');
       setInput('');
@@ -36,8 +37,6 @@ function App() {
   useEffect(() => {
     db.collection('todos').orderBy('taskComplete', 'asc').onSnapshot(snapshot => {
       setTodo(snapshot.docs.map(doc => ({id:doc.id, todo:doc.data()})))
-      console.log(snapshot.docs.map(doc => ({id:doc.id, todo:doc.data()})))
-      console.log(todos)
     })    
   },[])
 
@@ -59,7 +58,6 @@ function App() {
                 required 
                 value={inputTime} 
                 onChange={ e => {
-                  console.log(date.getHours())
                   if( e.target.value.slice(0,2)>=date.getHours() && e.target.value.slice(3,)>date.getMinutes())
                     setInputTime(e.target.value)
                     }
@@ -70,12 +68,12 @@ function App() {
       </div>
       <div className="todos">
         {todos.map( ( todo )=> (
-          <div>
+          <div key={todo.id}>
             <ToDoItem 
-              key={todo.id}
               id={todo.id}
               todoItem={todo.todo.taskName.slice(0,18)}
               deadline={todo.todo.taskComplete}
+              complete={todo.todo.doneDatabase}
             />
             <div className="hrline" style={{width:'108%', height:'0.2px', backgroundColor:'rgb(173,173,173)', marginTop:'1%', marginBottom:'1%', marginLeft:'-4%' }} ></div>
           </div>

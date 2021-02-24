@@ -5,10 +5,38 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import db from './firebase';
 import './App.css'
 
-export const ToDoItem = ( { id, todoItem, deadline } ) => {
+export const ToDoItem = ( { id, todoItem, deadline, complete } ) => {
 
     const [noteDone, Done] = useState(<ThumbUpAltIcon/>)
+
+    const [updateInput, setInput] = useState(todoItem)
+
+    const [updateInputtime, setInputtime] = useState(deadline)
+
+    const initStyle = {
+        display:'none'
+    }
+
+    const finaStyle = {
+        display:'flex',
+        flexDirection:'row',
+        top:0
+    }
+
+    const [updateInitStyle, updateFinstyle] = useState(initStyle)
     
+    const EditTodo = (e) => {
+        updateFinstyle(finaStyle)
+    }
+
+    const updateTodo = (e) => {
+        db.collection('todos').doc(id).set({
+            taskName:updateInput,
+            taskComplete:updateInputtime
+        }, {merge:true})
+        updateFinstyle(initStyle)
+    }
+
     const inStyle = {
         marginLeft:'-3%',
         textDecoration:'none',
@@ -17,15 +45,18 @@ export const ToDoItem = ( { id, todoItem, deadline } ) => {
 
     const finStyle = {
         marginLeft:'-3%',
-        textDecoration:'line-through',
+        textDecoration:'line-through black ',
         color:'gray'
     }
 
     const [styleTodoItem, setStyleTodoItem] = useState(inStyle)
     
+    if(complete){
+        setStyleTodoItem(finStyle)   
+    }
+
     const change = (e) => {
         Done(String.fromCharCode(10004))
-        setStyleTodoItem(finStyle);
     }
     
     const deleteTodo = (e) => {
@@ -41,12 +72,31 @@ export const ToDoItem = ( { id, todoItem, deadline } ) => {
 
     return (
         <div className="each_todo">
-            <div className="task_name" style={styleTodoItem}>{todoItem}</div>
-            <div style={{ display:'flex', flexDirection:'row', alignItems:'center' }}>
-                <div className="task_before">{deadline}</div>
-                <div className="remove_todo" onClick={deleteTodo} style={{marginLeft:'5%',color:setColor()}}><DeleteIcon style={{ fontSize:25 }} /></div>
-                <div className="edit_task" style={{ marginRight:'5%', color:setColor()}} ><CreateIcon/></div>
-                <div className="task_complete" onClick={change} style={{ color:setColor()}}>{noteDone}</div>
+            <div style={{ display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between' }}>
+                <div className="task_name" id={id} style={styleTodoItem}>{todoItem}</div>
+                <div style={{ display:'flex', flexDirection:'row', alignItems:'center' }}>
+                    <div className="task_before">{deadline}</div>
+                    <div className="remove_todo" onClick={deleteTodo} style={{marginLeft:'5%',color:setColor()}}><DeleteIcon style={{ fontSize:25 }} /></div>
+                    <div className="edit_task" onClick={EditTodo} style={{ marginRight:'5%', color:setColor()}} ><CreateIcon/></div>
+                    <div className="task_complete" onClick={change} style={{ color:setColor()}}>{noteDone}</div>
+                </div>
+            </div>
+            <div className="update_todo" style={updateInitStyle} >
+                <input placeholder={todoItem} onChange={ e => {
+                            if(e.target.value==='')
+                                setInput({todoItem}) 
+                            else
+                                setInput(e.target.value)
+                        }
+                    }/>
+                <input type="time" placeholder={deadline} onChange={ e => {
+                            if(e.target.value==='')
+                                setInputtime({deadline})
+                            else
+                                setInputtime(e.target.value)
+                        } 
+                    }/>
+                <button onClick={updateTodo} >Update Todo</button>
             </div>
         </div>
     )
