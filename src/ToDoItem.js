@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import CreateIcon from '@material-ui/icons/Create';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import '../App.css'
+import './App.css'
 
 export const ToDoItem = ( { todoItem, deadline, taskNo } ) => {
 

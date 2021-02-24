@@ -1,7 +1,8 @@
 import './App.css';
-import React, { useState } from 'react'
-import { ToDoItem } from './components/ToDoItem'
+import React, { useState, useEffect } from 'react'
+import { ToDoItem } from './ToDoItem'
 import { initialTasks } from './initialTasks'
+import db from './firebase';
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
 
   const [inputTime, setInputTime] = useState('');
  
-  const [todos, setTodo] = useState(initialTasks);
+  const [todos, setTodo] = useState([]);
 
   const setJson = () =>{
     return {
@@ -37,6 +38,13 @@ function App() {
   }
 
   const date = new Date();
+
+  useEffect(() => {
+    db.collection('todos').onSnapshot(snapshot => {
+      setTodo(snapshot.docs.map(doc => doc.data()))
+      console.log({todos})
+    })    
+  },[])
 
   return (
     <div className="App">
