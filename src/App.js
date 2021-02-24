@@ -34,7 +34,7 @@ function App() {
   const date = new Date();
 
   useEffect(() => {
-    db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+    db.collection('todos').orderBy('taskComplete', 'asc').onSnapshot(snapshot => {
       setTodo(snapshot.docs.map(doc => doc.data()))
     })    
   },[])
@@ -57,6 +57,8 @@ function App() {
                 required 
                 value={inputTime} 
                 onChange={ e => {
+                  console.log(date.getHours())
+                  if( e.target.value.slice(0,2)>=date.getHours() && e.target.value.slice(3,)>date.getMinutes())
                     setInputTime(e.target.value)
                     console.log(e.target.value)
                     }
