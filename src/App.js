@@ -35,7 +35,9 @@ function App() {
 
   useEffect(() => {
     db.collection('todos').orderBy('taskComplete', 'asc').onSnapshot(snapshot => {
-      setTodo(snapshot.docs.map(doc => doc.data()))
+      setTodo(snapshot.docs.map(doc => ({id:doc.id, todo:doc.data()})))
+      console.log(snapshot.docs.map(doc => ({id:doc.id, todo:doc.data()})))
+      console.log(todos)
     })    
   },[])
 
@@ -60,7 +62,6 @@ function App() {
                   console.log(date.getHours())
                   if( e.target.value.slice(0,2)>=date.getHours() && e.target.value.slice(3,)>date.getMinutes())
                     setInputTime(e.target.value)
-                    console.log(e.target.value)
                     }
                 } 
           />
@@ -71,11 +72,12 @@ function App() {
         {todos.map( ( todo )=> (
           <div>
             <ToDoItem 
-              key={todos.indexOf(todo)}
-              todoItem={todo.taskName.slice(0,18)}
-              deadline={todo.taskComplete}
+              key={todo.id}
+              id={todo.id}
+              todoItem={todo.todo.taskName.slice(0,18)}
+              deadline={todo.todo.taskComplete}
             />
-            <div className="hrline" style={{width:'116%', height:'0.2px', backgroundColor:'rgb(173,173,173)', marginTop:'1%', marginBottom:'1%', marginLeft:'-8%' }} ></div>
+            <div className="hrline" style={{width:'108%', height:'0.2px', backgroundColor:'rgb(173,173,173)', marginTop:'1%', marginBottom:'1%', marginLeft:'-4%' }} ></div>
           </div>
         ))}
       </div>
