@@ -8,7 +8,7 @@ Also using firebase as a realtime database
 
 Figuring out if use express or not...??
 
-# TO USE THE APPLICATION 
+# TO USE THE APPLICATION FOR PERSONAL USE
 * Create a firebase account
 * Create a project 
 * Inside that create app and register the same
