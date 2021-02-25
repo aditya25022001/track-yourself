@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import CreateIcon from '@material-ui/icons/Create';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
 import db from './firebase';
 import './App.css'
 
-export const ToDoItem = ( { id, todoItem, deadline} ) => {
+export const ToDoItem = ( { id, todoItem, deadline, inputDate } ) => {
 
 
     const color = () => {
@@ -78,6 +78,12 @@ export const ToDoItem = ( { id, todoItem, deadline} ) => {
         return `rgb(${rvalue*255},${gvalue*255},${bvalue*255})`
     }
 
+    useEffect(() => {
+        const date = new Date(inputDate.seconds*1000)
+        const prDate = new Date()
+        if(date.getDate() != prDate.getDate() || date.getMonth() != prDate.getMonth() || date.getFullYear() != prDate.getFullYear())
+            db.collection('todos').doc(id).delete();  
+    },[])
 
 
     return (

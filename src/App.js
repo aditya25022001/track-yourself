@@ -36,8 +36,8 @@ function App() {
   useEffect(() => {
     db.collection('todos').orderBy('taskComplete', 'asc').onSnapshot(snapshot => {
       setTodo(snapshot.docs.map(doc => ({id:doc.id, todo:doc.data()})))
-    })    
-  },[])
+    })
+  },[])  
 
   return (
     <div className="App">
@@ -72,6 +72,7 @@ function App() {
               id={todo.id}
               todoItem={todo.todo.taskName.slice(0,18)}
               deadline={todo.todo.taskComplete}
+              inputDate={todo.todo.timestamp}
             />
             <div className="hrline" style={{width:'108%', height:'0.2px', backgroundColor:'rgb(173,173,173)', marginTop:'1%', marginBottom:'1%', marginLeft:'-4%' }} ></div>
           </div>
