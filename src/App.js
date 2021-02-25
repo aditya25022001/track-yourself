@@ -16,6 +16,7 @@ function App() {
   const [todos, setTodo] = useState([]);
 
   const addTodo = (e) => {
+    window.location.reload()
     if(Input === '' || inputTime===''){
       setWarning('Please enter both due time and task name!!!');
     }

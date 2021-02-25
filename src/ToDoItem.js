@@ -7,7 +7,6 @@ import './App.css'
 
 export const ToDoItem = ( { id, todoItem, deadline, inputDate } ) => {
 
-
     const color = () => {
         if(deadline==="done")
             return {
@@ -77,14 +76,13 @@ export const ToDoItem = ( { id, todoItem, deadline, inputDate } ) => {
         let bvalue=0.8-Math.random();
         return `rgb(${rvalue*255},${gvalue*255},${bvalue*255})`
     }
+    
+    const date = new Date(inputDate.seconds*1000)
+    
+    const prDate = new Date()
 
-    useEffect(() => {
-        const date = new Date(inputDate.seconds*1000)
-        const prDate = new Date()
-        if(date.getDate() != prDate.getDate() || date.getMonth() != prDate.getMonth() || date.getFullYear() != prDate.getFullYear())
-            db.collection('todos').doc(id).delete();  
-    },[])
-
+    if(date.getDate() != prDate.getDate() || date.getMonth() != prDate.getMonth() || date.getFullYear() != prDate.getFullYear())
+        db.collection('todos').doc(id).delete();  
 
     return (
         <div className="each_todo">
